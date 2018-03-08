@@ -14,7 +14,18 @@
 		C1E7E7A6204C3EC800E10FED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1E7E7A4204C3EC800E10FED /* LaunchScreen.storyboard */; };
 		C1F3B4EE204ED01E00BF9263 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F3B4ED204ED01E00BF9263 /* Calculator.swift */; };
 		C1F3B4F0204ED1C000BF9263 /* CalculatorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F3B4EF204ED1C000BF9263 /* CalculatorButton.swift */; };
+		C1F3B4FA205193E000BF9263 /* woodwood_calculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F3B4F9205193E000BF9263 /* woodwood_calculatorTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C1F3B4FC205193E000BF9263 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C1E7E790204C3EC800E10FED /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C1E7E797204C3EC800E10FED;
+			remoteInfo = "woodwood-calculator";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C1E7E798204C3EC800E10FED /* woodwood-calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "woodwood-calculator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -26,10 +37,20 @@
 		C1E7E7A7204C3EC800E10FED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C1F3B4ED204ED01E00BF9263 /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 		C1F3B4EF204ED1C000BF9263 /* CalculatorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorButton.swift; sourceTree = "<group>"; };
+		C1F3B4F7205193E000BF9263 /* woodwood-calculatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "woodwood-calculatorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1F3B4F9205193E000BF9263 /* woodwood_calculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = woodwood_calculatorTests.swift; sourceTree = "<group>"; };
+		C1F3B4FB205193E000BF9263 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		C1E7E795204C3EC800E10FED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C1F3B4F4205193E000BF9263 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -43,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				C1E7E79A204C3EC800E10FED /* woodwood-calculator */,
+				C1F3B4F8205193E000BF9263 /* woodwood-calculatorTests */,
 				C1E7E799204C3EC800E10FED /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				C1E7E798204C3EC800E10FED /* woodwood-calculator.app */,
+				C1F3B4F7205193E000BF9263 /* woodwood-calculatorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,6 +117,15 @@
 			path = controller;
 			sourceTree = "<group>";
 		};
+		C1F3B4F8205193E000BF9263 /* woodwood-calculatorTests */ = {
+			isa = PBXGroup;
+			children = (
+				C1F3B4F9205193E000BF9263 /* woodwood_calculatorTests.swift */,
+				C1F3B4FB205193E000BF9263 /* Info.plist */,
+			);
+			path = "woodwood-calculatorTests";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -114,6 +146,24 @@
 			productReference = C1E7E798204C3EC800E10FED /* woodwood-calculator.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C1F3B4F6205193E000BF9263 /* woodwood-calculatorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C1F3B4FE205193E000BF9263 /* Build configuration list for PBXNativeTarget "woodwood-calculatorTests" */;
+			buildPhases = (
+				C1F3B4F3205193E000BF9263 /* Sources */,
+				C1F3B4F4205193E000BF9263 /* Frameworks */,
+				C1F3B4F5205193E000BF9263 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C1F3B4FD205193E000BF9263 /* PBXTargetDependency */,
+			);
+			name = "woodwood-calculatorTests";
+			productName = "woodwood-calculatorTests";
+			productReference = C1F3B4F7205193E000BF9263 /* woodwood-calculatorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -127,6 +177,11 @@
 					C1E7E797204C3EC800E10FED = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+					};
+					C1F3B4F6205193E000BF9263 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = C1E7E797204C3EC800E10FED;
 					};
 				};
 			};
@@ -144,6 +199,7 @@
 			projectRoot = "";
 			targets = (
 				C1E7E797204C3EC800E10FED /* woodwood-calculator */,
+				C1F3B4F6205193E000BF9263 /* woodwood-calculatorTests */,
 			);
 		};
 /* End PBXProject section */
@@ -156,6 +212,13 @@
 				C1E7E7A6204C3EC800E10FED /* LaunchScreen.storyboard in Resources */,
 				C1E7E7A3204C3EC800E10FED /* Assets.xcassets in Resources */,
 				C1E7E7A1204C3EC800E10FED /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C1F3B4F5205193E000BF9263 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,7 +236,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C1F3B4F3205193E000BF9263 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C1F3B4FA205193E000BF9263 /* woodwood_calculatorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C1F3B4FD205193E000BF9263 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C1E7E797204C3EC800E10FED /* woodwood-calculator */;
+			targetProxy = C1F3B4FC205193E000BF9263 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C1E7E79F204C3EC800E10FED /* Main.storyboard */ = {
@@ -332,6 +411,38 @@
 			};
 			name = Release;
 		};
+		C1F3B4FF205193E000BF9263 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WC8AN8LF84;
+				INFOPLIST_FILE = "woodwood-calculatorTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bensonlspapp.woodwood-calculatorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/woodwood-calculator.app/woodwood-calculator";
+			};
+			name = Debug;
+		};
+		C1F3B500205193E000BF9263 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WC8AN8LF84;
+				INFOPLIST_FILE = "woodwood-calculatorTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bensonlspapp.woodwood-calculatorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/woodwood-calculator.app/woodwood-calculator";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -349,6 +460,15 @@
 			buildConfigurations = (
 				C1E7E7AB204C3EC800E10FED /* Debug */,
 				C1E7E7AC204C3EC800E10FED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C1F3B4FE205193E000BF9263 /* Build configuration list for PBXNativeTarget "woodwood-calculatorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C1F3B4FF205193E000BF9263 /* Debug */,
+				C1F3B500205193E000BF9263 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
