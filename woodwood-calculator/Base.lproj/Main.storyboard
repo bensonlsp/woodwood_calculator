@@ -57,6 +57,9 @@
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="34"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="+/-"/>
+                                        <connections>
+                                            <action selector="plusMinusButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4yO-9v-Rp1"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u1f-2V-tOV" customClass="CalculatorButton" customModule="woodwood_calculator" customModuleProvider="target">
                                         <rect key="frame" x="174" y="0.0" width="82" height="82.5"/>
@@ -64,6 +67,9 @@
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="34"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="%"/>
+                                        <connections>
+                                            <action selector="percentButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jch-bo-sOh"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v9L-fd-cSR" customClass="CalculatorButton" customModule="woodwood_calculator" customModuleProvider="target">
                                         <rect key="frame" x="261" y="0.0" width="82" height="82.5"/>
@@ -262,6 +268,9 @@
                                         <state key="normal" title=".">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="dotButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xZZ-0G-HlV"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vy9-Ya-kqZ" customClass="CalculatorButton" customModule="woodwood_calculator" customModuleProvider="target">
                                         <rect key="frame" x="261" y="0.0" width="82" height="82"/>

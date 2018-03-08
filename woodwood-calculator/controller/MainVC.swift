@@ -32,6 +32,7 @@ class MainVC: UIViewController {
     @IBOutlet weak var EqualBtn: UIButton!
     
     var calculator: Calculator!
+    var isError = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,23 +62,49 @@ class MainVC: UIViewController {
     }
     
     
+    @IBAction func dotButtonPressed(_ sender: Any) {
+        if let buttonPressed = sender as? UIButton,
+            let buttonTitleLabel = buttonPressed.titleLabel,
+            let buttonText = buttonTitleLabel.text,
+            let screenText = screenLbt.text {
+            if screenText == "0" || calculator.operatorPressed == true {
+                screenLbt.text = "0."
+                calculator.operatorPressed = false
+            } else if screenText.contains(".") {
+            } else {
+                screenLbt.text = screenText + buttonText
+            }
+        }
+    }
+    
+    @IBAction func percentButtonPressed(_ sender: Any) {
+    }
+    
+    @IBAction func plusMinusButtonPressed(_ sender: Any) {
+    }
+    
+    
     @IBAction func plusButtonPressed(_ sender: Any) {
         copyScreenTxtToCalNum1()
+        calculator.operatorPressed = true
         calculator.operatorType = .plus
     }
     
     @IBAction func minusButtonPressed(_ sender: Any) {
         copyScreenTxtToCalNum1()
+        calculator.operatorPressed = true
         calculator.operatorType = .minus
     }
     
     @IBAction func multipyButtonPressed(_ sender: Any) {
         copyScreenTxtToCalNum1()
+        calculator.operatorPressed = true
         calculator.operatorType = .multipy
     }
     
     @IBAction func divideButtonPressed(_ sender: Any) {
         copyScreenTxtToCalNum1()
+        calculator.operatorPressed = true
         calculator.operatorType = .divide
     }
     
@@ -89,27 +116,31 @@ class MainVC: UIViewController {
         }
         
         if calculator.operatorType == .plus {
-            calculator.sum = calculator.number1 + calculator.number2
+            calculator.add()
         }
         if calculator.operatorType == .minus {
-            calculator.sum = calculator.number1 - calculator.number2
+            calculator.minus()
         }
         if calculator.operatorType == .multipy {
-            calculator.sum = calculator.number1 * calculator.number2
+            calculator.multipy()
         }
         if calculator.operatorType == .divide {
-            if calculator.number2 == 0 {
-                screenLbt.text = "ERROR!"
+            if calculator.number2 == 0.0 {
+                isError = true
             } else {
-                calculator.sum = calculator.number1 / calculator.number2
+                calculator.divide()
             }
         }
         
         print("Num1: \(calculator.number1), Num2: \(calculator.number2), Sum: \(calculator.sum)")
-        if floor(calculator.sum) == calculator.sum {
-            screenLbt.text = String(Int(calculator.sum))
+        if !isError {
+            if calculator.isDoubleAInt(calculator.sum) {
+                screenLbt.text = String(Int(calculator.sum))
+            } else {
+                screenLbt.text = String(calculator.sum)
+            }
         } else {
-            screenLbt.text = String(calculator.sum)
+            screenLbt.text = "ERROR!"
         }
         
     }
@@ -121,6 +152,7 @@ class MainVC: UIViewController {
         calculator.sum = 0.0
         calculator.operatorPressed = false
         calculator.operatorType = .empty
+        isError = false
     }
     
     func copyScreenTxtToCalNum1() {
@@ -128,8 +160,6 @@ class MainVC: UIViewController {
             let screenNumber = Double(screenText) {
             calculator.number1 = screenNumber
         }
-        calculator.operatorPressed = true
     }
-    
 }
 
