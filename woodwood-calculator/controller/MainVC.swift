@@ -11,6 +11,7 @@ import UIKit
 class MainVC: UIViewController {
     
     @IBOutlet weak var screenLbt: UILabel!
+    @IBOutlet weak var subScreenLbt: UILabel!
     @IBOutlet weak var acBtn: UIButton!
     @IBOutlet weak var plusMinusBtn: UIButton!
     @IBOutlet weak var percentageBtn: UIButton!
@@ -40,6 +41,7 @@ class MainVC: UIViewController {
         
         calculator = Calculator(number1: 0.0, number2: 0.0, sum: 0.0, operatorPressed: false, operatorType: .empty)
         screenLbt.text = "0"
+        subScreenLbt.text = "Hello!"
     }
 
     override func didReceiveMemoryWarning() {
@@ -78,9 +80,20 @@ class MainVC: UIViewController {
     }
     
     @IBAction func percentButtonPressed(_ sender: Any) {
+        if let screenText = screenLbt.text,
+            let screenNum = Double(screenText) {
+                screenLbt.text = String(screenNum * 0.01)
+            }
     }
     
     @IBAction func plusMinusButtonPressed(_ sender: Any) {
+        if let screenText = screenLbt.text {
+            if screenText.first == "-" {
+                screenLbt.text = String(screenText.dropFirst())
+            } else {
+                screenLbt.text = "-" + screenText
+            }
+        }
     }
     
     
@@ -133,19 +146,38 @@ class MainVC: UIViewController {
         }
         
         print("Num1: \(calculator.number1), Num2: \(calculator.number2), Sum: \(calculator.sum)")
+        
         if !isError {
             if calculator.isDoubleAInt(calculator.sum) {
                 screenLbt.text = String(Int(calculator.sum))
             } else {
                 screenLbt.text = String(calculator.sum)
             }
+            
+            switch (calculator.operatorType) {
+                case .plus:
+                    subScreenLbt.text =  "\(calculator.number1) + \(calculator.number2) = \(calculator.sum)"
+                case .minus:
+                    subScreenLbt.text =  "\(calculator.number1) - \(calculator.number2) = \(calculator.sum)"
+                case .multipy:
+                    subScreenLbt.text =  "\(calculator.number1) * \(calculator.number2) = \(calculator.sum)"
+                case .divide:
+                    subScreenLbt.text =  "\(calculator.number1) / \(calculator.number2) = \(calculator.sum)"
+                default:
+                    subScreenLbt.text = "Hello!"
+            }
+            
+            
         } else {
             screenLbt.text = "ERROR!"
+            subScreenLbt.text = "ERROR!"
         }
+        
         
     }
     
     @IBAction func AcButtonPressed(_ sender: Any) {
+        subScreenLbt.text = "Hello!"
         screenLbt.text = "0"
         calculator.number1 = 0.0
         calculator.number2 = 0.0
