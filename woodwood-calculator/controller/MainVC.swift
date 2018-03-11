@@ -35,14 +35,13 @@ class MainVC: UIViewController {
     var calculator: Calculator!
     var isError = false
     var waitingForNewNumber = true
-    var firstNumber1InputReady = false
-    var firstNumber2InputReady = false
+    var runReady = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        calculator = Calculator(operatorType: .empty, number1: 0.0, number2: 0.0, answer: 0.0)
+        calculator = Calculator(operatorType: .empty, numbers: [0.0, 0.0], number1: 0.0, number2: 0.0, answer: 0.0)
         screenLbt.text = "0"
         subScreenLbt.text = "Hello!"
     }
@@ -57,12 +56,17 @@ class MainVC: UIViewController {
             let buttonTitleLabel = buttonPressed.titleLabel,
             let buttonText = buttonTitleLabel.text,
             let screenText = screenLbt.text {
-                if screenText == "0" && buttonText == "0" {
-                } else if waitingForNewNumber == true {
-                    screenLbt.text = buttonText
-                    waitingForNewNumber = false
+                if waitingForNewNumber == true {
+                    if screenText == "0" && buttonText == "0" {
+                        waitingForNewNumber = false
+                    } else {
+                        screenLbt.text = buttonText
+                        waitingForNewNumber = false
+                    }
                 } else {
-                    screenLbt.text = screenText + buttonText
+                    if screenText.count < 10 {
+                        screenLbt.text = screenText + buttonText
+                    }
                 }
         }
     }
@@ -73,8 +77,7 @@ class MainVC: UIViewController {
             if waitingForNewNumber == true {
                 screenLbt.text = "0."
                 waitingForNewNumber = false
-            } else if screenText.contains(".") {
-            } else {
+            } else if screenText.contains(".") == false {
                 screenLbt.text = screenText + "."
             }
         }
@@ -87,6 +90,7 @@ class MainVC: UIViewController {
                     screenLbt.text = "0"
                 }
                 screenLbt.text = String(screenNum * 0.01)
+                waitingForNewNumber = false
             }
     }
     
@@ -97,6 +101,7 @@ class MainVC: UIViewController {
             } else {
                 screenLbt.text = "-" + screenText
             }
+            waitingForNewNumber = false
         }
     }
     
@@ -118,51 +123,40 @@ class MainVC: UIViewController {
     
     func operatorPressed(operatortype: OperatorType) {
         calculator.operatorType = operatortype
-        if waitingForNewNumber == false {
-            if firstNumber1InputReady == false {
-                copyScreenNumberToCalculator(toNumber: 1)
-                firstNumber1InputReady = true
-            } else if firstNumber1InputReady == true && firstNumber2InputReady == false {
-                copyScreenNumberToCalculator(toNumber: 2)
-                firstNumber2InputReady = true
-            } else {
-                copyScreenNumberToCalculator(toNumber: 2)
-                calculator.run()
-                printToScreen()
-                calculator.number1 = calculator.answer
-            }
+        addScreenNumberToCalculator()
+        if runReady == true && waitingForNewNumber == false {
+            calculator.getLastTwoNumbersToNum1Num2()
+            calculator.run()
+            printToScreen()
+            addScreenNumberToCalculator()
         }
+        runReady = true
         waitingForNewNumber = true
     }
     
     @IBAction func EqualButtonPressed(_ sender: Any) {
-        if waitingForNewNumber == false {
-            if firstNumber1InputReady == true && firstNumber2InputReady == false {
-                copyScreenNumberToCalculator(toNumber: 2)
-                calculator.run()
-                printToScreen()
-                calculator.number1 = calculator.answer
-            } else {
-                copyScreenNumberToCalculator(toNumber: 2)
-                calculator.run()
-                printToScreen()
-                calculator.number1 = calculator.answer
-            }
+        addScreenNumberToCalculator()
+        if runReady == true  && waitingForNewNumber == false {
+            calculator.getLastTwoNumbersToNum1Num2()
+            calculator.run()
+            printToScreen()
+            addScreenNumberToCalculator()
         }
+        runReady = true
         waitingForNewNumber = true
     }
     
     @IBAction func AcButtonPressed(_ sender: Any) {
         subScreenLbt.text = "Hello!"
         screenLbt.text = "0"
+        calculator.numbers = [0.0, 0.0]
         calculator.number1 = 0.0
         calculator.number2 = 0.0
         calculator.answer = 0.0
         calculator.operatorType = .empty
         isError = false
         waitingForNewNumber = true
-        firstNumber1InputReady = false
-        firstNumber2InputReady = false
+        runReady = false
     }
     
     func copyScreenNumberToCalculator(toNumber index: Int) {
@@ -173,6 +167,13 @@ class MainVC: UIViewController {
                 } else if index == 2 {
                     calculator.number2 = screenNumber
                 }
+        }
+    }
+    
+    func addScreenNumberToCalculator() {
+        if let screenText = screenLbt.text,
+            let screenNumber = Double(screenText) {
+                calculator.numbers.append(screenNumber)
         }
     }
     

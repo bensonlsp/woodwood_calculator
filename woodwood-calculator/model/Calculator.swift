@@ -18,6 +18,7 @@ enum OperatorType {
 
 struct Calculator {
     var operatorType: OperatorType
+    var numbers: [Double]
     var number1: Double
     var number2: Double
     var answer: Double
@@ -34,6 +35,11 @@ struct Calculator {
             divide()
         default: break
         }
+    }
+    
+    mutating func getLastTwoNumbersToNum1Num2() {
+        number1 = numbers[numbers.count - 2]
+        number2 = numbers[numbers.count - 1]
     }
     
     mutating func add() {
