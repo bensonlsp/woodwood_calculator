@@ -8,38 +8,6 @@
 
 import Foundation
 
-struct Calculator {
-    var number1: Double
-    var number2: Double
-    var sum: Double
-    var operatorPressed: Bool
-    var operatorType: OperatorType
-    
-    mutating func add() {
-        sum = number1 + number2
-    }
-    
-    mutating func minus() {
-        sum = number1 - number2
-    }
-    
-    mutating func multipy() {
-        sum = number1 * number2
-    }
-    
-    mutating func divide() {
-        sum = number1 / number2
-    }
-    
-    func isDoubleAInt(_ number: Double) -> Bool {
-        if floor(number) == number {
-            return true
-        } else {
-            return false
-        }
-    }
-}
-
 enum OperatorType {
     case plus
     case minus
@@ -47,3 +15,42 @@ enum OperatorType {
     case divide
     case empty
 }
+
+struct Calculator {
+    var operatorType: OperatorType
+    var number1: Double
+    var number2: Double
+    var answer: Double
+    
+    mutating func run() {
+        switch operatorType {
+        case .plus:
+            add()
+        case .minus:
+            minus()
+        case .multipy:
+            multipy()
+        case .divide:
+            divide()
+        default: break
+        }
+    }
+    
+    mutating func add() {
+        answer = number1 + number2
+    }
+    
+    mutating func minus() {
+        answer = number1 - number2
+    }
+    
+    mutating func multipy() {
+        answer = number1 * number2
+    }
+    
+    mutating func divide() {
+        answer = number1 / number2
+    }
+}
+
+

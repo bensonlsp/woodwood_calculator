@@ -34,12 +34,15 @@ class MainVC: UIViewController {
     
     var calculator: Calculator!
     var isError = false
+    var waitingForNewNumber = true
+    var firstNumber1InputReady = false
+    var firstNumber2InputReady = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        calculator = Calculator(number1: 0.0, number2: 0.0, sum: 0.0, operatorPressed: false, operatorType: .empty)
+        calculator = Calculator(operatorType: .empty, number1: 0.0, number2: 0.0, answer: 0.0)
         screenLbt.text = "0"
         subScreenLbt.text = "Hello!"
     }
@@ -54,27 +57,25 @@ class MainVC: UIViewController {
             let buttonTitleLabel = buttonPressed.titleLabel,
             let buttonText = buttonTitleLabel.text,
             let screenText = screenLbt.text {
-            if screenText == "0" || calculator.operatorPressed == true {
-                screenLbt.text = buttonText
-                calculator.operatorPressed = false
-            } else {
-                screenLbt.text = screenText + buttonText
-            }
+                if screenText == "0" && buttonText == "0" {
+                } else if waitingForNewNumber == true {
+                    screenLbt.text = buttonText
+                    waitingForNewNumber = false
+                } else {
+                    screenLbt.text = screenText + buttonText
+                }
         }
     }
     
     
     @IBAction func dotButtonPressed(_ sender: Any) {
-        if let buttonPressed = sender as? UIButton,
-            let buttonTitleLabel = buttonPressed.titleLabel,
-            let buttonText = buttonTitleLabel.text,
-            let screenText = screenLbt.text {
-            if screenText == "0" || calculator.operatorPressed == true {
+        if let screenText = screenLbt.text {
+            if waitingForNewNumber == true {
                 screenLbt.text = "0."
-                calculator.operatorPressed = false
+                waitingForNewNumber = false
             } else if screenText.contains(".") {
             } else {
-                screenLbt.text = screenText + buttonText
+                screenLbt.text = screenText + "."
             }
         }
     }
@@ -82,6 +83,9 @@ class MainVC: UIViewController {
     @IBAction func percentButtonPressed(_ sender: Any) {
         if let screenText = screenLbt.text,
             let screenNum = Double(screenText) {
+                if screenNum == 0.0 {
+                    screenLbt.text = "0"
+                }
                 screenLbt.text = String(screenNum * 0.01)
             }
     }
@@ -96,84 +100,56 @@ class MainVC: UIViewController {
         }
     }
     
-    
     @IBAction func plusButtonPressed(_ sender: Any) {
-        copyScreenTxtToCalNum1()
-        calculator.operatorPressed = true
-        calculator.operatorType = .plus
+        operatorPressed(operatortype: .plus)
     }
     
     @IBAction func minusButtonPressed(_ sender: Any) {
-        copyScreenTxtToCalNum1()
-        calculator.operatorPressed = true
-        calculator.operatorType = .minus
+        operatorPressed(operatortype: .minus)
     }
     
     @IBAction func multipyButtonPressed(_ sender: Any) {
-        copyScreenTxtToCalNum1()
-        calculator.operatorPressed = true
-        calculator.operatorType = .multipy
+        operatorPressed(operatortype: .multipy)
     }
     
     @IBAction func divideButtonPressed(_ sender: Any) {
-        copyScreenTxtToCalNum1()
-        calculator.operatorPressed = true
-        calculator.operatorType = .divide
+        operatorPressed(operatortype: .divide)
     }
     
+    func operatorPressed(operatortype: OperatorType) {
+        calculator.operatorType = operatortype
+        if waitingForNewNumber == false {
+            if firstNumber1InputReady == false {
+                copyScreenNumberToCalculator(toNumber: 1)
+                firstNumber1InputReady = true
+            } else if firstNumber1InputReady == true && firstNumber2InputReady == false {
+                copyScreenNumberToCalculator(toNumber: 2)
+                firstNumber2InputReady = true
+            } else {
+                copyScreenNumberToCalculator(toNumber: 2)
+                calculator.run()
+                printToScreen()
+                calculator.number1 = calculator.answer
+            }
+        }
+        waitingForNewNumber = true
+    }
     
     @IBAction func EqualButtonPressed(_ sender: Any) {
-        if let screenText = screenLbt.text,
-            let screenNumber = Double(screenText) {
-            calculator.number2 = screenNumber
-        }
-        
-        if calculator.operatorType == .plus {
-            calculator.add()
-        }
-        if calculator.operatorType == .minus {
-            calculator.minus()
-        }
-        if calculator.operatorType == .multipy {
-            calculator.multipy()
-        }
-        if calculator.operatorType == .divide {
-            if calculator.number2 == 0.0 {
-                isError = true
+        if waitingForNewNumber == false {
+            if firstNumber1InputReady == true && firstNumber2InputReady == false {
+                copyScreenNumberToCalculator(toNumber: 2)
+                calculator.run()
+                printToScreen()
+                calculator.number1 = calculator.answer
             } else {
-                calculator.divide()
+                copyScreenNumberToCalculator(toNumber: 2)
+                calculator.run()
+                printToScreen()
+                calculator.number1 = calculator.answer
             }
         }
-        
-        print("Num1: \(calculator.number1), Num2: \(calculator.number2), Sum: \(calculator.sum)")
-        
-        if !isError {
-            if calculator.isDoubleAInt(calculator.sum) {
-                screenLbt.text = String(Int(calculator.sum))
-            } else {
-                screenLbt.text = String(calculator.sum)
-            }
-            
-            switch (calculator.operatorType) {
-                case .plus:
-                    subScreenLbt.text =  "\(calculator.number1) + \(calculator.number2) = \(calculator.sum)"
-                case .minus:
-                    subScreenLbt.text =  "\(calculator.number1) - \(calculator.number2) = \(calculator.sum)"
-                case .multipy:
-                    subScreenLbt.text =  "\(calculator.number1) * \(calculator.number2) = \(calculator.sum)"
-                case .divide:
-                    subScreenLbt.text =  "\(calculator.number1) / \(calculator.number2) = \(calculator.sum)"
-                default:
-                    subScreenLbt.text = "Hello!"
-            }
-            
-            
-        } else {
-            screenLbt.text = "ERROR!"
-            subScreenLbt.text = "ERROR!"
-        }
-        
-        
+        waitingForNewNumber = true
     }
     
     @IBAction func AcButtonPressed(_ sender: Any) {
@@ -181,16 +157,60 @@ class MainVC: UIViewController {
         screenLbt.text = "0"
         calculator.number1 = 0.0
         calculator.number2 = 0.0
-        calculator.sum = 0.0
-        calculator.operatorPressed = false
+        calculator.answer = 0.0
         calculator.operatorType = .empty
         isError = false
+        waitingForNewNumber = true
+        firstNumber1InputReady = false
+        firstNumber2InputReady = false
     }
     
-    func copyScreenTxtToCalNum1() {
+    func copyScreenNumberToCalculator(toNumber index: Int) {
         if let screenText = screenLbt.text,
             let screenNumber = Double(screenText) {
-            calculator.number1 = screenNumber
+                if index == 1 {
+                    calculator.number1 = screenNumber
+                } else if index == 2 {
+                    calculator.number2 = screenNumber
+                }
+        }
+    }
+    
+    func printToScreen() {
+        if calculator.operatorType == .divide && calculator.number2 == 0.0 {
+            isError = true
+        }
+        
+        if !isError {
+            if isDoubleAInt(calculator.answer) {
+                screenLbt.text = String(Int(calculator.answer))
+            } else {
+                screenLbt.text = String(calculator.answer)
+            }
+            
+            switch (calculator.operatorType) {
+            case .plus:
+                subScreenLbt.text =  "\(calculator.number1) + \(calculator.number2) = \(calculator.answer)"
+            case .minus:
+                subScreenLbt.text =  "\(calculator.number1) - \(calculator.number2) = \(calculator.answer)"
+            case .multipy:
+                subScreenLbt.text =  "\(calculator.number1) * \(calculator.number2) = \(calculator.answer)"
+            case .divide:
+                subScreenLbt.text =  "\(calculator.number1) / \(calculator.number2) = \(calculator.answer)"
+            default:
+                subScreenLbt.text = "Hello!"
+            }
+        } else {
+            screenLbt.text = "ERROR!"
+            subScreenLbt.text = "ERROR!"
+        }
+    }
+    
+    func isDoubleAInt(_ number: Double) -> Bool {
+        if floor(number) == number {
+            return true
+        } else {
+            return false
         }
     }
 }
